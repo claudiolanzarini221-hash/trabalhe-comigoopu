@@ -1,0 +1,38 @@
+[
+  {
+    "id": 101,
+    "data": {
+      "1": "Carlos Eduardo Ribeiro",
+      "2": "29",
+      "3": "Iniciante com interesse em monetização",
+      "4": "Consumo diário e já testei criar vídeos",
+      "5": "2 a 4 horas por dia",
+      "6": "Notebook e iPhone 14",
+      "7": "R$ 4.500,00",
+      "8": "R$ 1.000 a R$ 2.000",
+      "9": "Construir renda recorrente e liberdade geográfica",
+      "10": "Dificuldade em encontrar um método validado",
+      "11": "100% comprometido em aplicar",
+      "12": "(11) 98765-4321 / @carlos.ribeiro"
+    },
+    "created_at": "2026-09-24T18:45:00.000Z"
+  },
+  {
+    "id": 102,
+    "data": {
+      "1": "Mariana Souza",
+      "2": "32",
+      "3": "Avançado em tráfego pago",
+      "4": "Criação de conteúdo e funis",
+      "5": "4 a 6 horas por dia",
+      "6": "MacBook Pro e iPhone 15 Pro",
+      "7": "R$ 12.000,00",
+      "8": "Mais de R$ 5.000",
+      "9": "Lançar múltiplos micro-SaaS escaláveis",
+      "10": "Falta de mentoria individual",
+      "11": "Totalmente pronta para investir e executar",
+      "12": "(21) 99123-4567 / @mari.souza"
+    },
+    "created_at": "2026-09-24T19:30:00.000Z"
+  }
+]

@@ -1,0 +1,137 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projeto SaaS</title>
+    <script type="module" src="js/index-DMG-jKOm.js"></script>
+    <link rel="stylesheet" crossorigin="" href="css/index-BqXY08WV.css">
+    <style>
+      #secret-admin-dot {
+        position: fixed;
+        top: 10px;
+        right: 12px;
+        width: 56px;
+        height: 56px;
+        z-index: 999999;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.45;
+        user-select: none;
+        color: #ffffff;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        padding: 0;
+      }
+      #secret-admin-dot:hover {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.18);
+        border-color: rgba(255, 255, 255, 0.4);
+        transform: translateY(-1px) scale(1.04);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+      }
+      #secret-admin-dot:active {
+        transform: scale(0.95);
+      }
+      #back-to-form-btn {
+        display: none;
+        position: fixed;
+        top: 14px;
+        left: 16px;
+        z-index: 99999;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 8px 14px;
+        border-radius: 10px;
+        cursor: pointer;
+        backdrop-filter: blur(8px);
+        transition: all 0.2s;
+        text-decoration: none;
+      }
+      #back-to-form-btn:hover {
+        background: rgba(255, 255, 255, 0.16);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- Botão de acesso ao Banco de Dados: 4x maior no mesmo lugar (canto superior direito) -->
+    <button id="secret-admin-dot" title="Acessar Banco de Dados" aria-label="Acessar Banco de Dados">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+      </svg>
+    </button>
+
+    <!-- Botão discreto para voltar ao formulário caso esteja no painel -->
+    <a id="back-to-form-btn" href="/">← Voltar ao Formulário (Bloquear)</a>
+
+    <script>
+      (function() {
+        const dot = document.getElementById('secret-admin-dot');
+        const backBtn = document.getElementById('back-to-form-btn');
+
+        function checkRoute() {
+          const isUjac = window.location.pathname.includes('/ujac');
+          if (backBtn) {
+            backBtn.style.display = isUjac ? 'block' : 'none';
+          }
+          if (!isUjac) {
+            localStorage.removeItem('admin_token_secure');
+          }
+        }
+
+        checkRoute();
+        window.addEventListener('popstate', checkRoute);
+
+        // Limpa sessão ao sair ou descarregar a página
+        window.addEventListener('beforeunload', function() {
+          localStorage.removeItem('admin_token_secure');
+        });
+
+        if (backBtn) {
+          backBtn.addEventListener('click', function() {
+            localStorage.removeItem('admin_token_secure');
+          });
+        }
+
+        // Identificação visual no formulário de login
+        const observer = new MutationObserver(function() {
+          const labels = document.querySelectorAll('label');
+          labels.forEach(function(l) {
+            if (l.textContent && (l.textContent.includes('Código de Acesso') || l.textContent === 'Código de Acesso')) {
+              l.textContent = 'Senha de Acesso ao Banco de Dados';
+            }
+          });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+
+        if (dot) {
+          dot.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            const isUjac = window.location.pathname.includes('/ujac');
+            if (isUjac) {
+              localStorage.removeItem('admin_token_secure');
+              window.location.href = '/';
+            } else {
+              // Garante que a senha claudio@221 seja solicitada toda vez
+              localStorage.removeItem('admin_token_secure');
+              window.location.href = '/ujac';
+            }
+          });
+        }
+      })();
+    </script>
+</body></html>
