@@ -1,0 +1,35 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#020A19"/>
+      <stop offset="50%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="16" y1="12" x2="48" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="50%" stop-color="#818CF8"/>
+      <stop offset="100%" stop-color="#C084FC"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  
+  <!-- Base container with rounded squircle -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+  
+  <!-- Modern SaaS Tech / Rocket & Growth Symbol -->
+  <g filter="url(#glow)">
+    <!-- Rocket fuselage / ascending arrow -->
+    <path d="M32 10C32 10 24 22 24 35C24 41 27.5 45 32 45C36.5 45 40 41 40 35C40 22 32 10 32 10Z" fill="url(#glowGrad)"/>
+    <!-- Left thruster wing -->
+    <path d="M24 33L17 41C16 42 16.5 44 18 44L24 43V33Z" fill="#38BDF8" opacity="0.85"/>
+    <!-- Right thruster wing -->
+    <path d="M40 33L47 41C48 42 47.5 44 46 44L40 43V33Z" fill="#C084FC" opacity="0.85"/>
+    <!-- Central cockpit window -->
+    <circle cx="32" cy="25" r="3.5" fill="#020A19" stroke="#FFFFFF" stroke-width="1.5"/>
+    <!-- Thrust flame -->
+    <path d="M30 46C30 46 32 54 32 54C32 54 34 46 34 46H30Z" fill="#F59E0B"/>
+  </g>
+</svg>

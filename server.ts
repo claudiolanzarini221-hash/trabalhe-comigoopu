@@ -152,6 +152,40 @@ app.post('/api/admin/webhooks/resend', async (req, res) => {
 
 // 6. Video config endpoints
 const VIDEO_CONFIG_FILE = path.resolve(process.cwd(), 'video-config.json');
+const ICON_CONFIG_FILE = path.resolve(process.cwd(), 'icon-config.json');
+
+app.get('/site-icon.svg', (_req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'site-icon.svg'));
+});
+
+app.get('/site-icon.png', (_req, res) => {
+  if (fs.existsSync(path.resolve(process.cwd(), 'site-icon.png'))) {
+    return res.sendFile(path.resolve(process.cwd(), 'site-icon.png'));
+  }
+  return res.redirect('/site-icon.svg');
+});
+
+app.get('/api/icon', (_req, res) => {
+  try {
+    if (fs.existsSync(ICON_CONFIG_FILE)) {
+      const data = JSON.parse(fs.readFileSync(ICON_CONFIG_FILE, 'utf-8'));
+      if (data && data.url) {
+        return res.json({ success: true, url: data.url });
+      }
+    }
+  } catch {}
+  return res.json({ success: true, url: '/site-icon.svg' });
+});
+
+app.post('/api/icon', (req, res) => {
+  const { url } = req.body;
+  try {
+    fs.writeFileSync(ICON_CONFIG_FILE, JSON.stringify({ url: (url || '').trim() }, null, 2), 'utf-8');
+    return res.json({ success: true, url: (url || '').trim() });
+  } catch (e: any) {
+    return res.status(500).json({ success: false, error: e.message });
+  }
+});
 
 app.get('/api/video', (_req, res) => {
   try {

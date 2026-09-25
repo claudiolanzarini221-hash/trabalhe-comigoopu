@@ -3,6 +3,9 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto SaaS</title>
+    <link rel="icon" id="dynamic-favicon" type="image/svg+xml" href="/site-icon.svg">
+    <link rel="alternate icon" href="/site-icon.svg">
+    <link rel="apple-touch-icon" href="/site-icon.svg">
     <script type="module" src="js/index-DMG-jKOm.js"></script>
     <link rel="stylesheet" crossorigin="" href="css/index-BqXY08WV.css">
     <style>
@@ -73,8 +76,8 @@
       </svg>
     </button>
 
-    <!-- Botão discreto para voltar ao formulário caso esteja no painel -->
-    <a id="back-to-form-btn" href="/">← Voltar ao Formulário (Bloquear)</a>
+    <!-- Botão para voltar ao formulário caso esteja no painel -->
+    <a id="back-to-form-btn" href="/">← Voltar ao Formulário</a>
 
     <script>
       (function() {
@@ -86,35 +89,20 @@
           if (backBtn) {
             backBtn.style.display = isUjac ? 'block' : 'none';
           }
-          if (!isUjac) {
-            localStorage.removeItem('admin_token_secure');
+          if (dot) {
+            dot.title = isUjac ? 'Voltar ao Formulário' : 'Acessar Banco de Dados';
           }
         }
 
         checkRoute();
         window.addEventListener('popstate', checkRoute);
 
-        // Limpa sessão ao sair ou descarregar a página
-        window.addEventListener('beforeunload', function() {
-          localStorage.removeItem('admin_token_secure');
-        });
-
         if (backBtn) {
-          backBtn.addEventListener('click', function() {
-            localStorage.removeItem('admin_token_secure');
+          backBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.location.href = '/';
           });
         }
-
-        // Identificação visual no formulário de login
-        const observer = new MutationObserver(function() {
-          const labels = document.querySelectorAll('label');
-          labels.forEach(function(l) {
-            if (l.textContent && (l.textContent.includes('Código de Acesso') || l.textContent === 'Código de Acesso')) {
-              l.textContent = 'Senha de Acesso ao Banco de Dados';
-            }
-          });
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
 
         if (dot) {
           dot.addEventListener('click', function(e) {
@@ -123,11 +111,8 @@
 
             const isUjac = window.location.pathname.includes('/ujac');
             if (isUjac) {
-              localStorage.removeItem('admin_token_secure');
               window.location.href = '/';
             } else {
-              // Garante que a senha claudio@221 seja solicitada toda vez
-              localStorage.removeItem('admin_token_secure');
               window.location.href = '/ujac';
             }
           });
