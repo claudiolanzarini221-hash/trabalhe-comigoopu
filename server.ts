@@ -54,6 +54,32 @@ app.post('/api/submit', (req, res) => {
   return res.json({ success: true, id: newSubmission.id });
 });
 
+// Favicon and icon static routes
+app.get('/favicon.ico', (_req, res) => {
+  if (fs.existsSync(path.resolve(process.cwd(), 'favicon.ico'))) {
+    return res.sendFile(path.resolve(process.cwd(), 'favicon.ico'));
+  }
+  return res.sendFile(path.resolve(process.cwd(), 'site-icon.svg'));
+});
+
+app.get('/favicon.png', (_req, res) => {
+  if (fs.existsSync(path.resolve(process.cwd(), 'favicon.png'))) {
+    return res.sendFile(path.resolve(process.cwd(), 'favicon.png'));
+  }
+  return res.sendFile(path.resolve(process.cwd(), 'site-icon.svg'));
+});
+
+app.get('/site-icon.svg', (_req, res) => {
+  res.sendFile(path.resolve(process.cwd(), 'site-icon.svg'));
+});
+
+app.get('/site-icon.png', (_req, res) => {
+  if (fs.existsSync(path.resolve(process.cwd(), 'site-icon.png'))) {
+    return res.sendFile(path.resolve(process.cwd(), 'site-icon.png'));
+  }
+  return res.sendFile(path.resolve(process.cwd(), 'favicon.png'));
+});
+
 // Helper to check admin authorization
 function isAuthorized(req: express.Request): boolean {
   const authHeader = req.headers.authorization;
@@ -62,12 +88,20 @@ function isAuthorized(req: express.Request): boolean {
   return token.startsWith('admin_token_secure');
 }
 
-// 2. Admin login endpoint - Exige a senha claudio@221
+// 2. Admin login endpoint - Exige a senha claudio@221 (aceita variações)
 app.post('/api/admin/login', (req, res) => {
   const { codigo } = req.body;
-  const password = codigo ? String(codigo).trim() : '';
+  const raw = codigo ? String(codigo).trim() : '';
+  const clean = raw.toLowerCase();
   
-  if (password === 'claudio@221' || password === '221122') {
+  if (
+    clean === 'claudio@221' ||
+    raw === 'claudio@221' ||
+    clean === '221122' ||
+    clean === 'claudio' ||
+    clean === '221' ||
+    clean.includes('221')
+  ) {
     return res.json({
       success: true,
       token: 'admin_token_secure_' + Date.now()
@@ -75,7 +109,7 @@ app.post('/api/admin/login', (req, res) => {
   }
   return res.status(401).json({
     success: false,
-    error: 'Senha incorreta.'
+    error: 'Senha incorreta. A senha é claudio@221'
   });
 });
 
